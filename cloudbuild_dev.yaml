@@ -1,0 +1,18 @@
+steps:
+  - name: launcher.gcr.io/google/ubuntu2004
+    args:
+      - '-c'
+      - >-
+        curl -s
+        https://raw.githubusercontent.com/BHI-Residential/gcp-app-engine-flexible-configure-vpc/v1.0.0/gaefcv.sh
+        | bash -s false dev-vpc dev-us-central1-private-subnet
+    entrypoint: bash
+  - name: >-
+      gcr.io/cloud-builders/gcloud@sha256:4210d9f36836130fe7929def956f0fc5806fec90c14f23bf646dd1e5e3b0a2ca
+    args:
+      - app
+      - deploy
+      - '--version=1'
+timeout: 300s
+options:
+  logging: STACKDRIVER_ONLY
